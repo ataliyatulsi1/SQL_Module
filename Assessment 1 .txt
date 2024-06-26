@@ -1,0 +1,197 @@
+Assessment :- 1
+
+Question 1
+
+
+1. Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending. 
+mysql> Select * From worker ORDER BY First_Name ASC, Department DESC;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      |
++-----------+------------+-----------+--------+---------------------+------------+
+
+
+2. Write an SQL query to print details for Workers with the first names “Vipul” and “Satish” from the Worker table. 
+mysql> Select * From worker WHERE First_Name IN ("Vipul", "Satish");
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    |
++-----------+------------+-----------+--------+---------------------+------------+
+
+
+3. Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘h’ and contains six alphabets.
+mysql> Select * from Worker where First_Name LIKE "%h" AND LENGTH(First_Name) = 6;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    |
++-----------+------------+-----------+--------+---------------------+------------+
+
+
+4. Write an SQL query to print details of the Workers whose SALARY lies between 1.
+mysql> Select * from Worker WHERE Salary BETWEEN 1 AND 100000;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      |
++-----------+------------+-----------+--------+---------------------+------------+
+
+
+5. Write an SQL query to fetch duplicate records having matching data in some fields of a table.
+mysql> Select First_name, Last_Name, Department, joining_Date From Worker Group BY First_Name, Last_Name, Department, Joining_Date HAVING COUNT(*) < 1;
+Empty set (0.00 sec)
+
+
+6. Write an SQL query to show the top 6 records of a table.
+mysql> Select * From Worker LIMIT 6;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    |
++-----------+------------+-----------+--------+---------------------+------------+
+
+
+7. Write an SQL query to fetch the departments that have less than five people in them.
+mysql> Select Department, Count(*) From Worker GROUP BY Department  HAVING COUNT(*) < 5;
++------------+----------+
+| Department | Count(*) |
++------------+----------+
+| HR         |        2 |
+| Admin      |        4 |
+| Account    |        2 |
++------------+----------+
+
+
+8. Write an SQL query to show all departments along with the number of people in there.
+mysql> Select Department, Count(*)  AS "Number Of People" From Worker GROUP BY Department;
++------------+------------------+
+| Department | Number Of People |
++------------+------------------+
+| HR         |                2 |
+| Admin      |                4 |
+| Account    |                2 |
++------------+------------------+
+
+
+9. Write an SQL query to print the name of employees having the highest salary in each department. 
+mysql> Select Department, First_Name, Last_Name, Salary From Worker w1
+    -> Where Salary = (Select MAX(Salary) From Worker w2 Where w1.Department = w2.Department);
++------------+------------+-----------+--------+
+| Department | First_Name | Last_Name | Salary |
++------------+------------+-----------+--------+
+| HR         | Vishal     | Singhal   | 300000 |
+| Admin      | Amitabh    | Singh     | 500000 |
+| Admin      | Vivek      | Bhati     | 500000 |
+| Account    | Vipul      | Diwan     | 200000 |
++------------+------------+-----------+--------+
+
+
+Question 2
+Open school database, then select student table and use following SQL statements.
+TYPE THE STATEMENT, PRESS ENTER AND NOTE THE OUTPUT 
+
+
+1 To display all the records form STUDENT table. 
+SELECT * FROM student;
+mysql> SELECT * FROM student;
++-------+----------------+--------+------------+-------+------+----------+------------+
+| StdID | StdName        | Sex    | Percentage | Class | Sec  | Stream   | DOB        |
++-------+----------------+--------+------------+-------+------+----------+------------+
+|  1001 | Surekha Joshi  | Female |         82 |    12 | A    | Science  | 1998-03-08 |
+|  1002 | MAAHI AGARWAL  | Female |         56 |    11 | C    | Commerce | 2008-11-23 |
+|  1003 | Sanam Verma    | Male   |         59 |    11 | C    | Commerce | 2006-06-29 |
+|  1004 | Ronit Kumar    | Male   |         63 |    11 | C    | Commerce | 1997-11-05 |
+|  1005 | Dipesh Pulkit  | Male   |         78 |    11 | B    | Science  | 2003-09-14 |
+|  1006 | JAHANVI Puri   | Female |         60 |    11 | B    | Commerce | 2008-11-07 |
+|  1007 | Sanam Kumar    | Male   |         23 |    12 | F    | Commerce | 1998-03-08 |
+|  1008 | SAHIL SARAS    | Male   |         56 |    11 | C    | Commerce | 2008-11-07 |
+|  1009 | AKSHRA AGARWAL | Female |         72 |    12 | B    | Commerce | 1996-10-01 |
+|  1010 | STUTI MISHRA   | Female |         39 |    11 | F    | Science  | 2008-11-23 |
+|  1011 | HARSH AGARWAL  | Male   |         42 |    11 | C    | Science  | 1998-03-08 |
+|  1012 | NIKUNJ AGARWAL | Male   |         49 |    12 | C    | Commerce | 1998-06-28 |
+|  1013 | AKRITI SAXENA  | Female |         89 |    12 | A    | Science  | 2008-11-23 |
+|  1014 | TANI RASTOGI   | Female |         82 |    12 | A    | Science  | 2008-11-23 |
++-------+----------------+--------+------------+-------+------+----------+------------+
+
+
+2. To display any name and date of birth from the table STUDENT. 
+SELECT StdName, DOB FROM student ;
+mysql> SELECT StdName, DOB FROM student;
++----------------+------------+
+| StdName        | DOB        |
++----------------+------------+
+| Surekha Joshi  | 1998-03-08 |
+| MAAHI AGARWAL  | 2008-11-23 |
+| Sanam Verma    | 2006-06-29 |
+| Ronit Kumar    | 1997-11-05 |
+| Dipesh Pulkit  | 2003-09-14 |
+| JAHANVI Puri   | 2008-11-07 |
+| Sanam Kumar    | 1998-03-08 |
+| SAHIL SARAS    | 2008-11-07 |
+| AKSHRA AGARWAL | 1996-10-01 |
+| STUTI MISHRA   | 2008-11-23 |
+| HARSH AGARWAL  | 1998-03-08 |
+| NIKUNJ AGARWAL | 1998-06-28 |
+| AKRITI SAXENA  | 2008-11-23 |
+| TANI RASTOGI   | 2008-11-23 |
++----------------+------------+
+
+
+3. To display all students record where percentage is greater of equal to 80 FROM student table.
+SELECT * FROM student WHERE percentage >= 80;
+mysql> SELECT * FROM student WHERE percentage >= 80;
++-------+---------------+--------+------------+-------+------+---------+------------+
+| StdID | StdName       | Sex    | Percentage | Class | Sec  | Stream  | DOB        |
++-------+---------------+--------+------------+-------+------+---------+------------+
+|  1001 | Surekha Joshi | Female |         82 |    12 | A    | Science | 1998-03-08 |
+|  1013 | AKRITI SAXENA | Female |         89 |    12 | A    | Science | 2008-11-23 |
+|  1014 | TANI RASTOGI  | Female |         82 |    12 | A    | Science | 2008-11-23 |
++-------+---------------+--------+------------+-------+------+---------+------------+
+
+4. To display student name, stream and percentage where percentage of student is more than 80
+SELECT StdName, Stream, Percentage WHERE percentage > 80;
+mysql> SELECT StdName, Stream, Percentage WHERE percentage > 80;
+ERROR 1054 (42S22): Unknown column 'StdName' in 'field list'
+
+mysql> SELECT StdName, Stream, Percentage FROM student WHERE Percentage > 80;
++---------------+---------+------------+
+| StdName       | Stream  | Percentage |
++---------------+---------+------------+
+| Surekha Joshi | Science |         82 |
+| AKRITI SAXENA | Science |         89 |
+| TANI RASTOGI  | Science |         82 |
++---------------+---------+------------+
+
+5. To display all records of science students whose percentage is more than 75 form student table.
+SELECT * FORM student WHERE stream = ‘Science’ AND percentage > 75;
+
+mysql> SELECT * FORM student WHERE stream = ‘Science’ AND percentage > 75;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FORM student WHERE stream = ?Science? AND percentage > 75' at line 1
+
+mysql> SELECT * FROM student WHERE Stream = 'Science' AND Percentage > 75;
++-------+---------------+--------+------------+-------+------+---------+------------+
+| StdID | StdName       | Sex    | Percentage | Class | Sec  | Stream  | DOB        |
++-------+---------------+--------+------------+-------+------+---------+------------+
+|  1001 | Surekha Joshi | Female |         82 |    12 | A    | Science | 1998-03-08 |
+|  1005 | Dipesh Pulkit | Male   |         78 |    11 | B    | Science | 2003-09-14 |
+|  1013 | AKRITI SAXENA | Female |         89 |    12 | A    | Science | 2008-11-23 |
+|  1014 | TANI RASTOGI  | Female |         82 |    12 | A    | Science | 2008-11-23 |
++-------+---------------+--------+------------+-------+------+---------+------------+ 
